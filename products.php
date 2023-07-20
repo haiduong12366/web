@@ -14,7 +14,7 @@ $sql = "select * from products";
 $result =  mysqli_query($connect,$sql);
 ?>
 
-<div id="giua">
+<div id="giua" style="text-align: center;">
     <?php foreach($result as $each): ?>
         <div class="tung_san_pham">
             <h1>

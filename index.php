@@ -10,13 +10,14 @@ session_start();
     <title>Document</title>
     <style type="text/css">
         *{
+            border: 0;
             margin: 0;
-            padding: 0;
         }
         #tong{
             width: 100%;
             height: 700px;
             background: black;
+            
         }
         #tren{
             width: 100%;

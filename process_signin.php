@@ -34,9 +34,10 @@ if($number_row == 1)
         mysqli_query($connect,$sql);
         setcookie('remember',$token,time()+60*60*24*30);
     }
-    
+    unset($_SESSION['level']);
     header('location:user.php');
     exit;
+
 }
 header("location:signin.php?error=Sai tài khoản hoặc mật khẩu");
 exit;

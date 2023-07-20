@@ -12,6 +12,7 @@ if(empty($_SESSION['id'])){
     <title>Document</title>
 </head>
 <body>
+    <a href="index.php">Trang chủ</a><br>
     Đây là trang người dùng, xin chào bạn
     <?php echo $_SESSION['name'];?>
     <a href="signout.php">

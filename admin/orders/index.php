@@ -70,5 +70,5 @@
         <?php endforeach?>
     </table>
 </body>
-</html>l
+</html>
 
