@@ -30,9 +30,10 @@
             <?php echo "Chào, ". $_SESSION['name'];?>
             <a href="signout.php">Đăng xuất</a>
         </li>
-        <?php }?>
         <li>
             <a href="view_cart.php">Xem giỏ hàng</a>
         </li>
+        <?php }?>
+        
     </ol>
 </div>

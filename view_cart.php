@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if(empty($_SESSION['id'])){
+    header('location:index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +27,7 @@
 <body>
     <a href="index.php">Trang chủ</a>
 <?php
-session_start();
+
 $sum = 0;
 ?>
 <table border="1" width="100%">

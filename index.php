@@ -1,7 +1,7 @@
-<?php
+<?php 
 session_start();
-?>
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +10,7 @@ session_start();
     <title>Document</title>
     <style type="text/css">
         *{
+
             border: 0;
             margin: 0;
         }

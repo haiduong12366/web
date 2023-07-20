@@ -1,6 +1,9 @@
 <?php
-
 session_start();
+
+if(empty($_SESSION['id'])){
+    header('location:index.php');
+}
 //unset($_SESSION['cart']);
 
 $id = $_GET['id'];
