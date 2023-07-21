@@ -13,9 +13,11 @@
     <br>
     <?php require '../menu.php'; 
     require '../connect.php';
-    $sql = "select products.*,manufacturers.name manufacturer_name from products 
-    inner join manufacturers on manufacturers.id = products.manufacturer_id";
+    $sql = "SELECT products.*,manufacturers.name manufacturer_name from products 
+    inner join manufacturers on manufacturers.id = products.manufacturer_id
+    order by products.id";
     $result = mysqli_query($connect,$sql);
+    mysqli_close($connect);
     ?>
     
     

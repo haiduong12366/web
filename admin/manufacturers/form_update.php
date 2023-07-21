@@ -10,9 +10,11 @@
 <body>
 <?php
 if(empty($_GET['id'])){
-    header('location:index.php?error=Phải truyền id');
+    $_SESSION['error'] = "Phải truyền id";
+    header('location:index.php');
+    exit;
 }
-include '../menu.php';
+require '../menu.php';
 require '../connect.php';
 $id =$_GET['id']; 
 $sql = "select * from manufacturers 

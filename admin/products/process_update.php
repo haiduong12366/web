@@ -2,7 +2,9 @@
 require '../check_admin_login.php';
 
 if(empty($_POST['id'])){
-    header('location:index.php?error=Truyền mã để sửa');
+    $_SESSION['error'] = "Truyền mã để sửa";
+    header('location:index.php');
+    exit;
 }
 $id = $_POST['id'];
 
@@ -39,9 +41,9 @@ manufacturer_id = '$manufacturer_id'
 where id = $id";
 
 mysqli_query($connect,$sql);
-$error = mysqli_error($connect);
-header('location:index.php?success=Sửa thành công');
-
 mysqli_close($connect);
+header('location:index.php?success=Sửa thành công');
+exit;
+
 
 

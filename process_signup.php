@@ -14,8 +14,14 @@ $number_row = mysqli_fetch_array($result)['count(*)'];
 
 if($number_row > 0)
 {
-    header("location:signup.php?error=Email đã đăng ký");
+    session_start();
+    $_SESSION['error']="Email đã được sử dụng";
+    header("location:signup.php");
+    exit;
 }
+$sql = "SELECT max(id) as id from customers";
+$result = mysqli_query($connect,$sql);
+$id = mysqli_fetch_array($result)['id'] + 1;
 
 $sql = "insert into customers(name,email,password,phone_number,address)
 values('$name','$email','$password','$phone_number','$address')";
@@ -35,4 +41,5 @@ $_SESSION['id'] =  $id;
 $_SESSION['name'] =  $name;
 mysqli_close($connect);
 header('location:user.php?success=Tạo thành công');
+exit;
 

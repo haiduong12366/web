@@ -8,13 +8,15 @@
     <title>Document</title>
 </head>
 <body>
-    Đây là khu vực nhà sản xuất
+    <h1>Quản lý nhà sản xuất</h1>
+    
     <br>
-    <a href="form_insert.php">thêm</a>
-    <?php include '../menu.php'; ?>
+    <a href="form_insert.php">Thêm nhà sản xuất</a>
+    <?php require '../menu.php'; ?>
     <?php
     require '../connect.php';
-    $sql = "select * from manufacturers";
+    $sql = "select * from manufacturers
+    order by id";
     $result = mysqli_query($connect,$sql);
     ?>
     <table border="1" width="100%">

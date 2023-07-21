@@ -21,8 +21,13 @@ foreach($cart as $each){
 
 $customer_id = $_SESSION['id'];
 $status = 0;
-$sql = "INSERT INTO orders(customer_id, name_receiver, phone_receiver, address_receiver, status, total_price)
-VALUES('$customer_id', '$name_receiver', '$phone_receiver', '$address_receiver', '$status', '$total_price')";
+$sql = "SELECT max(id) as id from orders";
+$result = mysqli_query($connect,$sql);
+$id = mysqli_fetch_array($result)['id'] + 1;
+
+
+$sql = "INSERT INTO orders(id,customer_id, name_receiver, phone_receiver, address_receiver, status, total_price)
+VALUES($id,'$customer_id', '$name_receiver', '$phone_receiver', '$address_receiver', '$status', '$total_price')";
 mysqli_query($connect,$sql);
 
 $sql = "SELECT max(id) from orders where customer_id = '$customer_id'";
@@ -39,3 +44,4 @@ foreach($cart as $product_id => $each){
     unset($_SESSION['cart']);
 }
 header("location:index.php");
+exit;

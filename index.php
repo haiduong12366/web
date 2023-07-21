@@ -11,7 +11,6 @@ session_start();
     <style type="text/css">
         *{
 
-            border: 0;
             margin: 0;
         }
         #tong{
@@ -27,12 +26,12 @@ session_start();
         }
         #giua{
             width: 100%;
-            height: 80%;
+            height: 85%;
             background: red;
         }
         #duoi{
             width: 100%;
-            height: 10%;
+            height: 5%;
             background: purple;
         }
     </style>

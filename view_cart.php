@@ -74,8 +74,8 @@ where id = $id";
 $result = mysqli_query($connect,$sql);
 $each   = mysqli_fetch_array($result);
 ?>
-
-<form action="process_checkout.php" method="post">
+<?php if(!isset($_SESSION['level'])) {?>
+    <form action="process_checkout.php" method="post">
     Tên người nhận:
     <input type="text" name="name_receiver" value="<?php echo $each['name']?>">
     <br>
@@ -87,6 +87,7 @@ $each   = mysqli_fetch_array($result);
     <br>
     <button>Đặt hàng</button>
 </form>
+<?php }?>
 
 </body>
 </html>

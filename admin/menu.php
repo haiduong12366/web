@@ -1,5 +1,10 @@
 <ul>
     <li>
+        <a href="http://localhost/web/">
+            Trang chủ
+        </a>
+    </li>
+    <li>
         <a href="../manufacturers">
             Quản lý nhà sản xuất
         </a>
@@ -17,13 +22,17 @@
 </ul>
 
 <?php 
-    if(isset($_GET['error'])){ ?>
-        <span style="color:red"><?php echo $_GET['error']?></span>
+    if(isset($_SESSION['error'])){ ?>
+        <span style="color:red"><?php echo $_SESSION['error']?></span>
 
-<?php }?>
+<?php
+    unset($_SESSION['error']);
+}?>
 
 <?php 
-    if(isset($_GET['success'])){ ?>
-        <span style="color:green"><?php echo $_GET['success']?></span>
+    if(isset($_SESSION['success'])){ ?>
+        <span style="color:green"><?php echo $_SESSION['success']?></span>
 
-<?php }?>
+<?php 
+    unset($_SESSION['success']);
+}?>

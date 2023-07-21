@@ -38,5 +38,6 @@ if($number_row == 1)
     exit;
 
 }
-header("location:signin.php?error=Sai tài khoản hoặc mật khẩu");
+$_SESSION['error'] = "Sai tài khoản hoặc mật khẩu";
+header("location:signin.php");
 exit;

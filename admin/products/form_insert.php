@@ -12,6 +12,7 @@
     require '../connect.php';
     $sql = "select * from manufacturers";
     $result = mysqli_query($connect,$sql);
+    mysqli_close($connect);
     ?>
 <form action="process_insert.php" method="post" enctype="multipart/form-data">
     Tên

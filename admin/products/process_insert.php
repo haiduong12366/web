@@ -6,6 +6,11 @@ $photo =$_FILES['photo'];
 $price =$_POST['price'];
 $description =$_POST['description'];
 $manufacturer_id =$_POST['manufacturer_id'];
+require '../connect.php';
+$sql = "SELECT max(id) as id from products";
+$result = mysqli_query($connect,$sql);
+$id = mysqli_fetch_array($result)['id'] + 1;
+
 
 $folder = 'photos/'; 
 $file_extention = explode('.',$photo['name'])[1];
@@ -15,11 +20,13 @@ $target_file = $folder . time() . '.' . $file_extention;
 move_uploaded_file($photo["tmp_name"], $target_file);
 
 require '../connect.php';
-$sql = "insert into products(name,photo,price,description,manufacturer_id)
-values('$name','$file_name','$price','$description','$manufacturer_id')";
+$sql = "insert into products(id,name,photo,price,description,manufacturer_id)
+values($id,'$name','$file_name','$price','$description','$manufacturer_id')";
 
 mysqli_query($connect,$sql);
 mysqli_close($connect);
+$_SESSION['success'] = "Thêm thành công";
+header('location:index.php');
+exit;
 
-header('location:index.php?success=Thêm thành công');
 

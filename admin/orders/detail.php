@@ -1,4 +1,5 @@
-<?php require '../check_admin_login.php';?>
+<?php require '../check_admin_login.php';
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,11 +9,12 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="index.php">Trang quản lí đơn hàng</a>
     <?php require '../connect.php';
     $id = $_GET['id'];
     $sql = "SELECT *
     from order_product
-    inner join products on products.id = order_product.order_id
+    inner join products on products.id = order_product.product_id
     where order_id = $id";
     $result = mysqli_query($connect,$sql);
     ?>
@@ -27,8 +29,6 @@
     </tr> 
 <?php 
     $sum = 0;
-    $cart = $_SESSION['cart'];
-
         foreach($result as $each): ?>
         <tr>
             <td><img src="../products/photos/<?php echo $each['photo']?>" alt=""></td>

@@ -2,7 +2,8 @@
     require '../check_super_admin_login.php';
 
 if(empty($_POST['name'])||empty($_POST['address'])||empty($_POST['phone'])||empty($_POST['photo'])){
-    header('location:form_insert.php?error=Phải điền đầy đủ thông tin');
+    $_SESSION['error'] = "Phải điền đầy đủ thông tin";
+    header('location:form_insert.php');
 }
 $name =$_POST['name'];
 $address =$_POST['address'];
@@ -10,11 +11,18 @@ $phone =$_POST['phone'];
 $photo =$_POST['photo'];
 
 require '../connect.php';
-$sql = "insert into manufacturers(name,address,phone,photo)
-values('$name','$address','$phone','$photo')";
+$sql = "SELECT max(id) as id from manufacturers";
+$result = mysqli_query($connect,$sql);
+$id = mysqli_fetch_array($result)['id'] + 1;
+
+
+
+$sql = "insert into manufacturers(id,name,address,phone,photo)
+values($id,'$name','$address','$phone','$photo')";
 
 mysqli_query($connect,$sql);
 mysqli_close($connect);
-
-header('location:index.php?success=Thêm thành công');
+$_SESSION['success'] = "Thêm thành công";
+header('location:index.php');
+exit;
 

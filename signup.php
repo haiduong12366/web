@@ -37,11 +37,12 @@ require 'check_login.php';
     <script src="demo.js"></script> 
 </form>
 <?php 
-    if(isset($_GET['error'])){ ?>
-        <script type="text/javascript" >
-            document.getElementById('email_error').innerHTML="Email đã đăng kí"
-        </script>
 
+    if(isset($_SESSION['error'])){ ?>
+        <script type="text/javascript" >
+            document.getElementById('email_error').innerHTML="<?php echo $_SESSION['error'] ?>"
+        </script>
+        <?php unset($_SESSION['error']);?>
 <?php }?>
 <?php 
     if(isset($_GET['success'])){ ?>

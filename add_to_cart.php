@@ -27,3 +27,4 @@ else{
 
 echo json_encode($_SESSION['cart']);
 header("location:index.php");
+exit;

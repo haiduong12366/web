@@ -13,9 +13,13 @@
     </style>
 </head>
 <body>
-    <?php require '../connect.php';
+    <h1>Quản lý đơn hàng</h1>
+    <?php 
+    require '../menu.php';
+    require '../connect.php';
     $sql = "SELECT orders.*,customers.name,customers.phone_number,customers.address from orders
-    inner join customers on customers.id = orders.customer_id";
+    inner join customers on customers.id = orders.customer_id
+    order by orders.id";
     $result = mysqli_query($connect,$sql);
     ?>
     <table  border="1" width="100%">

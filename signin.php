@@ -21,6 +21,7 @@ if(isset($_COOKIE['remember']))
 if(isset($_SESSION['id']))
 {
     header('location:user.php');
+    exit;
 }
 ?>
 
@@ -37,6 +38,13 @@ if(isset($_SESSION['id']))
     </style>
 </head>
 <body>
+<?php 
+    if(isset($_SESSION['error'])){ ?>
+        <span style="color:red"><?php echo $_SESSION['error']?></span>
+
+<?php
+    unset($_SESSION['error']);
+}?>
 <form action="process_signin.php" method="post">
     Email
     <input type="text" name="email" autocomplete="false">
@@ -47,7 +55,7 @@ if(isset($_SESSION['id']))
     Ghi nhớ đăng nhập
     <input type="checkbox"  name="remember">
     <br>
-    <a href="forgot_password.php">forgot_password</a>
+    <a href="forgot_password.php">Forgot password</a>
     <br>
     <button>Đăng nhập</button>
 </form>

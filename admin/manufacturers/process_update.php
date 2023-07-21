@@ -2,11 +2,13 @@
     require '../check_super_admin_login.php';
 
 if(empty($_POST['id'])){
-    header('location:index.php?error=Truyền mã để sửa');
+    $_SESSION['error'] = "Truyền mã để sửa";
+    header('location:index.php');
 }
 $id = $_POST['id'];
 if(empty($_POST['name'])||empty($_POST['address'])||empty($_POST['phone'])||empty($_POST['photo'])){
-    header("location:form_update.php?id=$id&error=Phải điền đầy đủ thông tin");
+    $_SESSION['error'] = "Phải điền đầy đủ thông tin";
+    header("location:form_update.php?id=$id");
 }
 
 $name =$_POST['name'];
@@ -25,11 +27,17 @@ where id = $id";
 
 mysqli_query($connect,$sql);
 $error = mysqli_error($connect);
-if(empty($error)){
-    header('location:index.php?success=Sửa thành công');}
-else{
-    header("location:form_update.php?id=$id & error = Lỗi truy vấn");
-}
 mysqli_close($connect);
+if(empty($error)){
+    $_SESSION['success'] = "Sửa thành công";
+    header('location:index.php');
+    exit;
+}
+else{   
+    $_SESSION['error'] = "Lỗi truy vấn";
+    header("location:form_update.php?id=$id");
+    exit;
+}
+
 
 
