@@ -1,11 +1,3 @@
-let input = document.getElementById("password");
-input.addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.getElementById("click").click();
-  }
-});
-
 function kiemtra()
 {
     //check name

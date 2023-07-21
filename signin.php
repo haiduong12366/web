@@ -30,6 +30,11 @@ if(isset($_SESSION['id']))
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        a:link{
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 <form action="process_signin.php" method="post">
@@ -41,6 +46,8 @@ if(isset($_SESSION['id']))
     <br>
     Ghi nhớ đăng nhập
     <input type="checkbox"  name="remember">
+    <br>
+    <a href="forgot_password.php">forgot_password</a>
     <br>
     <button>Đăng nhập</button>
 </form>
