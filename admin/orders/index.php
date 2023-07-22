@@ -15,13 +15,54 @@
 <body>
     <h1>Quản lý đơn hàng</h1>
     <?php 
+    $date = '2020-01-01';
+
+    if(isset($_GET['date']))
+    {
+        $date = $_GET['date'];
+    }
+
     require '../menu.php';
     require '../connect.php';
     $sql = "SELECT orders.*,customers.name,customers.phone_number,customers.address from orders
     inner join customers on customers.id = orders.customer_id
+    where created_at > '$date'
     order by orders.id";
     $result = mysqli_query($connect,$sql);
+
+    
     ?>
+    <form action="time.php" method="post">
+        Chọn thời gian
+        
+
+        <select name="date" id="">
+            <?php for($i= 1;$i <= 31; $i++){ ?>
+                <option value="<?php echo $i;?>">
+                    <?php echo $i;?>
+                </option>
+
+            <?php }?> 
+        </select>
+        <select name="month" id="<?php echo $i;?>">
+            <?php for($i= 1;$i <= 12; $i++){ ?>
+                <option value="<?php echo $i;?>">
+                    <?php echo $i;?>
+                </option>
+
+            <?php }?> 
+        </select>
+        <select name="year" id="">
+            <?php for($i= date('Y');$i > 2000; $i--){ ?>
+                <option  value="<?php echo $i;?>">
+                    <?php echo $i;?>
+                </option>
+
+            <?php }?> 
+        </select>
+        <br>
+        <button>Xem</button>
+        </form>
     <table  border="1" width="100%">
         <tr>
             <th>Mã</th>

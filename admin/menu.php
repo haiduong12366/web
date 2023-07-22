@@ -5,6 +5,11 @@
         </a>
     </li>
     <li>
+        <a href="../statistic">
+            Thống kê
+        </a>
+    </li>
+    <li>
         <a href="../manufacturers">
             Quản lý nhà sản xuất
         </a>
