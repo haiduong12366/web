@@ -15,31 +15,24 @@ $number_row = mysqli_fetch_array($result)['count(*)'];
 if($number_row > 0)
 {
     session_start();
-    $_SESSION['error']="Email đã được sử dụng";
-    header("location:signup.php");
+    echo "Email đã được sử dụng";
     exit;
 }
 $sql = "SELECT max(id) as id from customers";
 $result = mysqli_query($connect,$sql);
 $id = mysqli_fetch_array($result)['id'] + 1;
 
-$sql = "insert into customers(name,email,password,phone_number,address)
-values('$name','$email','$password','$phone_number','$address')";
+$sql = "insert into customers(id,name,email,password,phone_number,address)
+values($id,'$name','$email','$password','$phone_number','$address')";
 mysqli_query($connect,$sql);
 require 'mail.php';
 $title = "Đăng Ký Thành Công";
 $content = "Chúc mừng bạn đăng ký thành công <a href='https://www.facebook.com/hai.duong1062002/'>click here</a>";
-sendmail($email,$name,$title,$content);
-
-$sql = "select id from customers
-where email = '$email'";
-$result  = mysqli_query($connect,$sql);
-$id = mysqli_fetch_array($result)['id'];
 
 session_start();
 $_SESSION['id'] =  $id;
 $_SESSION['name'] =  $name;
+//sendmail($email,$name,$title,$content);
 mysqli_close($connect);
-header('location:user.php?success=Tạo thành công');
-exit;
+echo "1";
 

@@ -11,18 +11,7 @@ if(empty($_SESSION['id'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style >
-        .adjust2:link
-        {
-            text-decoration: none;
-            color: red;
-        }
-        .adjust:link
-        {
-            text-decoration: none;
-        }
-
-    </style>
+    
 </head>
 <body>
     <a href="index.php">Trang chủ</a>
@@ -38,34 +27,60 @@ $sum = 0;
         <th>Số lượng</th>
         <th>Tổng tiền</th>
         <th>Xoá</th>
-    </tr> 
-<?php if(isset($_SESSION['cart'])){ 
-    $cart = $_SESSION['cart'];?>
+    </tr>
+    <?php if(isset($_SESSION['cart'])){ 
+        $cart = $_SESSION['cart'];?>
+        
+            <?php foreach($cart as $id => $each): ?>
+                <tr class="products">
+                    <td><img src="admin/products/photos/<?php echo $each['photo']?>" alt=""></td>
+                    <td><?php echo $each['name']?></td>
+                    <td>
+                        <span class="span-price">
+                            <?php echo $each['price']?>
+                        </span>
+                        
+                    </td>
+                    <td>
 
-    <?php foreach($cart as $id => $each): ?>
-        <tr>
-            <td><img src="admin/products/photos/<?php echo $each['photo']?>" alt=""></td>
-            <td><?php echo $each['name']?></td>
-            <td><?php echo $each['price']?></td>
-            <td>
-                <a class="adjust" href="update_quantity_in_cart.php?id=<?php echo $id?>&type=decrease">-</a>
-                <?php echo $each['quantity']?>
-                <a class="adjust" href="update_quantity_in_cart.php?id=<?php echo $id?>&type=increase">+</a>
+                    <button data-type="decrease" class="btn-update-quantity" data-id="<?php echo $id?>">-</button>
 
-            </td>
-            <?php $result = $each['price'] * $each['quantity'];
-            $sum += $result; ?>
-            <td><?php echo $result . "$" ?></td>
-            <td><a class="adjust2" href="delete_from_cart.php?id=<?php echo $id?>">Xóa</a></td>  
-        </tr>
-    <?php endforeach?>
-<?php }?>
+                        <!-- <a class="adjust" href="update_quantity_in_cart.php?id=<?php echo $id?>&type=decrease">-</a> -->
+                        <span class="span-quantity">
+                            <?php echo $each['quantity']?>
+                        </span>
+                        
+                        
+                        <!-- <a class="adjust" href="update_quantity_in_cart.php?id=<?php echo $id?>&type=increase">+</a> -->
+                        <button data-type="increase" class="btn-update-quantity" data-id="<?php echo $id?>">+</button>
+                    </td>
+                    <?php $result = $each['price'] * $each['quantity'];
+                    $sum += $result; ?>
+                    <td>
+                        <span class="span-sum">
+                            <?php echo $result . "$" ?>
+                        </span>
+                    </td>
+                    <td><button data-type="1" class="btn-delete" data-id="<?php echo $id?>">X</button></td>
+                    <!-- <td><a class="adjust2" href="delete_from_cart.php?id=<?php echo $id?>">Xóa</a></td>   -->
+                </tr>
+                
+            <?php endforeach?>
+        
+    <?php }?>
 </table>
+
 <?php if(isset($_SESSION['cart'])){ ?>
-<a style="direction:rtl;position:absolute ;right: 30px;color:red;" class="adjust2"   href="delete_from_cart.php?type=deleteall">Xóa tất cả</a>
+
+    <button style="direction:rtl;position:absolute ;right: 30px;color:red;" data-type="0" class="btn-delete" >Xóa tất cả</button>
+    <!-- <a style="direction:rtl;position:absolute ;right: 30px;color:red;" class="adjust2"   href="delete_from_cart.php?type=deleteall">Xóa tất cả</a> -->
+
 <?php }?>
 
-<h1>Tống hóa đơn:<?php echo " " . $sum ?></h1>
+    <h1 >Tống hóa đơn:
+        <span id="span-total"><?php echo " " . $sum ?></span>  
+        $
+    </h1>
 <?php
 $id = $_SESSION['id'];
 require 'admin/connect.php';
@@ -88,6 +103,84 @@ $each   = mysqli_fetch_array($result);
     <button>Đặt hàng</button>
 </form>
 <?php }?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".btn-update-quantity").click(function () { 
+            let btn = $(this)
+            let id = btn.data('id');
+            let type = $(this).data('type');
+            $.ajax({
+                type: "GET",
+                url: "update_quantity_in_cart.php",
+                data: {id, type},
+                
+            })
+            .done(function(){
+                let parent_tr = btn.parents('tr');
+                let price = parent_tr.find('.span-price').text();
+                let quantity = parent_tr.find('.span-quantity').text();
+                if(type == 'increase'){
+                    if(quantity < 10){
+                        quantity++;
+                    }
+                }
+                else{
+                    quantity--;
+                }
+                if(quantity == 0){
+                    parent_tr.remove();
+                }
+                else{
+                    parent_tr.find('.span-quantity').text(quantity);
+                    let sum = price * quantity;
+                    parent_tr.find('.span-sum').text(sum + '$');
+                }
+                
+            })
+            
+         })
+         $(".btn-delete").click(function () { 
+            let btn = $(this)
+            let type = $(this).data('type');
+            if(type == '1'){
+               
+                let id = btn.data('id');
+                $.ajax({
+                    type: "GET",
+                    url: "delete_from_cart.php",
+                    data: {id, type},
+                    success: function (response) {
+                        btn.parents('tr').remove();
+                        getTotal();
+                    }
+                })
+                
+            }
+            else{
+                //document.getElementById("my-element").remove();
+                $.ajax({
+                    type: "GET",
+                    url: "delete_from_cart.php",
+                    data: {type},
+                    success: function (response) {
+                        $(".products").remove();     
+                        getTotal();
+                    }       
+                })
+                
+                    
+            }
+         })
+         function getTotal(){
+            let total = 0
+                $(".span-sum").each(function(){
+                    total += parseFloat($(this).text());
 
+                })
+                $("#span-total").text(total);
+         }
+    })
+</script>
 </body>
 </html>

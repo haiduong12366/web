@@ -1,13 +1,16 @@
 <?php
-
 session_start();
-if(isset($_GET['type'])){
-    unset($_SESSION['cart']);
-    header('location:view_cart.php');
-}
-else{
+
+$type = $_GET['type'];
+
+if($type === "1"){
     $id = $_GET['id'];
     unset($_SESSION['cart'][$id]);
+    
+    // header('location:view_cart.php');
+}
+else{
+    unset($_SESSION['cart']);
 
-    header('location:view_cart.php');
+    // header('location:view_cart.php');
 }

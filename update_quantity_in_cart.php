@@ -20,4 +20,5 @@ else{
     if($_SESSION['cart'][$id]['quantity'] < 10)
         $_SESSION['cart'][$id]['quantity']++;
 }
-header("location:view_cart.php");
+// header("location:view_cart.php");
+// exit;

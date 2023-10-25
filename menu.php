@@ -1,39 +1,34 @@
 
-<style>
-    li{
-        list-style-type: none;
-    }
-
-</style>
 <div id="tren"  >
     <ol style="position:relative ; left :-30px;">
-        <li>
+        <li >
             <a  href="index.php">Trang chủ</a>
-            <?php 
-            if(isset($_SESSION['level'])){?>
-            <a  style="direction:rtl;position:absolute ;right: 20px;color:red;" href="admin/root/">Trang người quản lý</a>
-            <?php }?> 
+            <a  style="<?php if(!isset($_SESSION['level'])){?> display :none <?php }?>;direction:rtl;position:absolute ;right: 10px;color:red;" href="admin/root/">Trang người quản lý</a>
+             
         </li>
-        <?php 
- 
-        if(empty($_SESSION['id'])){?>
-        <li>
+        
+        <li class="menu-guest" style="<?php if(isset($_SESSION['id'])){?> display:none <?php } ?>">
             <a href="signin.php">Đăng nhập</a>
         </li>
-        <li>
-            <a href="signup.php">Đăng Ký</a>
+        <li class="menu-guest" style="<?php if(isset($_SESSION['id'])){?> display:none <?php } ?>">
+            <button type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-signup"> Đăng kí</button>
+            
         </li>
-        <?php } 
-        else{ ?>
-        
-        <li>
-            <?php echo "Chào, ". $_SESSION['name'];?>
+        <li class="menu-user" style="<?php if(empty($_SESSION['id'])){?> display:none <?php } ?>" >
+            Chào, 
+            <span id="span-name">
+                <?php echo $_SESSION['name'] ?? ''?>
+            </span>
             <a href="signout.php">Đăng xuất</a>
         </li>
-        <li>
+        <li class="menu-user" style="<?php if(empty($_SESSION['id'])){?> display:none <?php } ?>">
             <a href="view_cart.php">Xem giỏ hàng</a>
         </li>
-        <?php }?>
-        
     </ol>
 </div>
+<?php 
+if(empty($_SESSION['id'])){
+    include 'signup.php';
+    //include 'signup.php';
+
+}?>

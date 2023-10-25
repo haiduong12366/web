@@ -64,9 +64,14 @@ $result =  mysqli_query($connect,$sql);
 
 <div id="giua" >
     <div class="tren" style="text-align: center;">
-    <form action="">
-            <input type="search" name="find" value="<?php echo $find?>" size="100" >
-        </form>
+    <div class="ui-widget">
+        <img id="project-icon" src="images/transparent_1x1.png" class="ui-state-default" alt>
+        <input id="project" type="search" name="find" value="<?php echo $find?>" size="100">
+        <input type="hidden" id="project-id">
+
+    </div>
+
+
     </div>
     <div class="giua" style="text-align: center;">
         <?php foreach($result as $each): ?>
@@ -79,7 +84,9 @@ $result =  mysqli_query($connect,$sql);
                 <a href="product.php?id=<?php echo $each['id']?>">Xem chi tiết</a>
                 <?php if(isset($_SESSION['id'])) { ?>
                     <br>
-                    <a href="add_to_cart.php?id=<?php echo $each['id']?>">Thêm vào giỏ hàng</a>
+                    <button class="btn-add-to-cart" data-id="<?php echo $each['id']?>">Thêm vào giỏ hàng</button>
+                    <br>
+                    <!-- <a href="add_to_cart.php?id=<?php echo $each['id']?>">Thêm vào giỏ hàng</a> -->
         
                 <?php } ?>
             </div>
@@ -93,3 +100,29 @@ $result =  mysqli_query($connect,$sql);
     </div>
     <?php mysqli_close($connect) ?>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function() {
+            $( "#project" ).autocomplete({
+                minLength: 0,
+                source: 'search.php',
+                focus: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
+                    return false;
+                },
+                select: function( event, ui ) {
+                    $( "#project" ).val( ui.item.label );
+                    $( "#project-id" ).val( ui.item.value );
+                    $( "#project-icon" ).attr( "src", "admin/products/photos/" + ui.item.photo );
+                    
+                    return false;
+                }
+            })
+            .autocomplete( "instance" )._renderItem = function( ul, item ) {
+                return $( "<li>" )
+                    .append("<div>" + item.label + "<br>" + "<img src='admin/products/photos/"+ item.photo +"' height= '50'>" + "</div>")
+                    .appendTo( ul );
+            };
+        } );
+    </script>
